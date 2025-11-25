@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Notas</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --fonte-principal: "Poppins", sans-serif;
+      }
+      body {
+        font-family: var(--fonte-principal);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .efeito-vidro {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      /* Oculta controles nativos de input numérico */
+      input[type="text"]::-webkit-inner-spin-button,
+      input[type="text"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex items-center justify-center p-4 antialiased">
+    <main
+      class="efeito-vidro w-full max-w-md p-8 rounded-2xl shadow-2xl relative overflow-hidden"
+    >
+      <div
+        class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 to-indigo-500"
+      ></div>
+
+      <header class="text-center mb-8">
+        <div
+          class="inline-flex justify-center items-center bg-indigo-50 p-3 rounded-full mb-4 shadow-sm"
+        >
+          <i data-lucide="graduation-cap" class="w-8 h-8 text-indigo-600"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-800">Minhas Notas</h1>
+        <p class="text-gray-500 text-sm font-medium">
+          Controle de desempenho acadêmico
+        </p>
+      </header>
+
+      <form id="formulario-notas" class="space-y-6" novalidate>
+        <fieldset
+          class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 transition-colors hover:border-indigo-200"
+        >
+          <div class="flex items-center gap-2 mb-4">
+            <i data-lucide="calculator" class="w-4 h-4 text-indigo-500"></i>
+            <legend class="font-semibold text-gray-700">
+              Avaliação 1 (AV1)
+            </legend>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="space-y-1">
+              <label
+                for="av1-trabalho"
+                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide"
+              >
+                Trabalho (60%)
+              </label>
+              <input
+                type="text"
+                inputmode="decimal"
+                id="av1-trabalho"
+                name="av1-trabalho"
+                placeholder="0.0"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+              />
+            </div>
+            <div class="space-y-1">
+              <label
+                for="av1-qstone"
+                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide"
+              >
+                QStone (40%)
+              </label>
+              <input
+                type="text"
+                inputmode="decimal"
+                id="av1-qstone"
+                name="av1-qstone"
+                placeholder="0.0"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+              />
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between items-center bg-white px-4 py-2 rounded-lg border border-indigo-100 shadow-sm"
+          >
+            <span class="text-xs text-gray-500 font-semibold uppercase"
+              >Média Parcial</span
+            >
+            <output
+              id="resultado-av1"
+              class="text-indigo-600 font-bold text-lg"
+              aria-live="polite"
+              aria-atomic="true"
+              >0.00</output
+            >
+          </div>
+        </fieldset>
+
+        <fieldset
+          class="bg-purple-50/50 p-5 rounded-xl border border-purple-100 transition-colors hover:border-purple-200"
+        >
+          <div class="flex items-center gap-2 mb-4">
+            <i data-lucide="calculator" class="w-4 h-4 text-purple-500"></i>
+            <legend class="font-semibold text-gray-700">
+              Avaliação 2 (AV2)
+            </legend>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="space-y-1">
+              <label
+                for="av2-trabalho"
+                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide"
+              >
+                Trabalho (60%)
+              </label>
+              <input
+                type="text"
+                inputmode="decimal"
+                id="av2-trabalho"
+                name="av2-trabalho"
+                placeholder="0.0"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+              />
+            </div>
+            <div class="space-y-1">
+              <label
+                for="av2-qstone"
+                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide"
+              >
+                QStone (40%)
+              </label>
+              <input
+                type="text"
+                inputmode="decimal"
+                id="av2-qstone"
+                name="av2-qstone"
+                placeholder="0.0"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+              />
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between items-center bg-white px-4 py-2 rounded-lg border border-purple-100 shadow-sm"
+          >
+            <span class="text-xs text-gray-500 font-semibold uppercase"
+              >Média Parcial</span
+            >
+            <output
+              id="resultado-av2"
+              class="text-purple-600 font-bold text-lg"
+              aria-live="polite"
+              aria-atomic="true"
+              >0.00</output
+            >
+          </div>
+        </fieldset>
+
+        <section
+          class="bg-gray-900 text-white p-6 rounded-2xl shadow-xl transform transition-transform duration-300 hover:scale-[1.02]"
+          aria-label="Resultado da Média Final"
+        >
+          <div class="flex justify-between items-end">
+            <div>
+              <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+              >
+                Situação Acadêmica
+              </p>
+              <div class="flex items-center gap-2.5">
+                <span
+                  id="icone-situacao"
+                  class="flex items-center justify-center bg-gray-800 rounded-full p-1"
+                  aria-hidden="true"
+                >
+                  <i
+                    data-lucide="circle-dashed"
+                    class="w-5 h-5 text-gray-400"
+                  ></i>
+                </span>
+                <span
+                  id="texto-situacao"
+                  class="text-sm font-semibold text-gray-300"
+                  aria-live="polite"
+                >
+                  Aguardando dados...
+                </span>
+              </div>
+            </div>
+            <div class="text-right">
+              <output
+                id="resultado-final"
+                class="text-5xl font-bold tracking-tighter tabular-nums"
+                aria-label="Nota Final Calculada"
+              >
+                0.00
+              </output>
+            </div>
+          </div>
+        </section>
+
+        <div class="pt-2 space-y-4">
+          <button
+            type="button"
+            id="botao-copiar"
+            disabled
+            class="w-full bg-indigo-600 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2 group opacity-50 cursor-not-allowed hover:bg-indigo-700 active:scale-[0.98]"
+            aria-label="Copiar relatório de notas para a área de transferência"
+          >
+            <i
+              data-lucide="clipboard-copy"
+              class="w-5 h-5 group-hover:-translate-y-0.5 transition-transform"
+            ></i>
+            <span>Copiar Relatório</span>
+          </button>
+
+          <button
+            type="button"
+            id="botao-limpar"
+            class="text-xs text-gray-400 hover:text-red-500 font-medium transition-colors flex items-center justify-center gap-1.5 mx-auto py-2"
+          >
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            Limpar todos os campos
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <script>
+      const REGRAS = Object.freeze({
+        PESOS: { TRABALHO: 0.6, QSTONE: 0.4 },
+        LIMITES: { MIN: 0, MAX: 10, CASAS_DECIMAIS: 2 },
+        SITUACAO: {
+          APROVADO: {
+            notaCorte: 6,
+            texto: "Aprovado! Parabéns",
+            classeCor: "text-emerald-400",
+            icone: "check-circle-2",
+          },
+          RECUPERACAO: {
+            notaCorte: 4,
+            texto: "Reavaliação Necessária",
+            classeCor: "text-yellow-400",
+            icone: "alert-circle",
+          },
+          REPROVADO: {
+            texto: "Reprovado",
+            classeCor: "text-red-400",
+            icone: "x-circle",
+          },
+          PADRAO: {
+            texto: "Aguardando dados...",
+            classeCor: "text-gray-300",
+            icone: "circle-dashed",
+          },
+        },
+        ANIMACAO: { DURACAO_MS: 600 },
+      });
+
+      const DOM = {
+        formulario: document.getElementById("formulario-notas"),
+        entradas: document.querySelectorAll(".campo-nota"),
+        saidas: {
+          av1: document.getElementById("resultado-av1"),
+          av2: document.getElementById("resultado-av2"),
+          final: document.getElementById("resultado-final"),
+        },
+        situacao: {
+          texto: document.getElementById("texto-situacao"),
+          containerIcone: document.getElementById("icone-situacao"),
+        },
+        botoes: {
+          copiar: document.getElementById("botao-copiar"),
+          limpar: document.getElementById("botao-limpar"),
+        },
+      };
+
+      function calcularMediaPonderada(notaTrabalho, notaQstone) {
+        return (
+          notaTrabalho * REGRAS.PESOS.TRABALHO +
+          notaQstone * REGRAS.PESOS.QSTONE
+        );
+      }
+
+      function calcularMediaFinal(notaAv1, notaAv2) {
+        return (notaAv1 + notaAv2) / 2;
+      }
+
+      function determinarSituacao(notaFinal, possuiDados) {
+        if (!possuiDados) return REGRAS.SITUACAO.PADRAO;
+        if (notaFinal >= REGRAS.SITUACAO.APROVADO.notaCorte)
+          return REGRAS.SITUACAO.APROVADO;
+        if (notaFinal >= REGRAS.SITUACAO.RECUPERACAO.notaCorte)
+          return REGRAS.SITUACAO.RECUPERACAO;
+        return REGRAS.SITUACAO.REPROVADO;
+      }
+
+      function higienizarEntrada(valor) {
+        // Remove tudo que não for número ou ponto
+        let valorLimpo = valor.replace(/[^0-9.]/g, "");
+
+        if (!valorLimpo) return "";
+
+        const partes = valorLimpo.split(".");
+        if (partes.length > 2) {
+          valorLimpo = partes[0] + "." + partes.slice(1).join("");
+        }
+
+        const numero = parseFloat(valorLimpo);
+
+        if (numero > REGRAS.LIMITES.MAX) return REGRAS.LIMITES.MAX.toString();
+
+        if (valorLimpo.includes(".")) {
+          const [inteiro, decimal] = valorLimpo.split(".");
+          if (decimal.length > REGRAS.LIMITES.CASAS_DECIMAIS) {
+            return `${inteiro}.${decimal.substring(
+              0,
+              REGRAS.LIMITES.CASAS_DECIMAIS
+            )}`;
+          }
+        }
+
+        return valorLimpo;
+      }
+
+      function formatarNumero(numero) {
+        return numero.toFixed(REGRAS.LIMITES.CASAS_DECIMAIS);
+      }
+
+      function animarValorNumerico(elemento, valorInicial, valorFinal) {
+        if (valorInicial === valorFinal) return;
+
+        const delta = valorFinal - valorInicial;
+        let inicioTimestamp = null;
+
+        function passoAnimacao(timestamp) {
+          if (!inicioTimestamp) inicioTimestamp = timestamp;
+          const progresso = Math.min(
+            (timestamp - inicioTimestamp) / REGRAS.ANIMACAO.DURACAO_MS,
+            1
+          );
+
+          const suavizacao =
+            progresso === 1 ? 1 : 1 - Math.pow(2, -10 * progresso);
+          const valorAtual = valorInicial + delta * suavizacao;
+
+          elemento.textContent = formatarNumero(valorAtual);
+
+          if (progresso < 1) requestAnimationFrame(passoAnimacao);
+        }
+
+        requestAnimationFrame(passoAnimacao);
+      }
+
+      function atualizarVisualSituacao(configuracao) {
+        const { texto, classeCor, icone } = configuracao;
+
+        DOM.situacao.texto.textContent = texto;
+        DOM.situacao.texto.className = `text-sm font-semibold transition-colors duration-300 ${classeCor}`;
+
+        const iconeAtual = DOM.situacao.containerIcone
+          .querySelector("svg")
+          ?.getAttribute("data-lucide");
+
+        if (iconeAtual !== icone) {
+          DOM.situacao.containerIcone.innerHTML = `<i data-lucide="${icone}" class="w-5 h-5 ${classeCor}"></i>`;
+          lucide.createIcons();
+        }
+      }
+
+      function alternarEstadoBotaoCopiar(ativo) {
+        const botao = DOM.botoes.copiar;
+        const classesDesabilitadas = ["opacity-50", "cursor-not-allowed"];
+
+        botao.disabled = !ativo;
+
+        if (ativo) {
+          botao.classList.remove(...classesDesabilitadas);
+        } else {
+          botao.classList.add(...classesDesabilitadas);
+        }
+      }
+
+      function atualizarInterface() {
+        const obterValor = (id) =>
+          parseFloat(document.getElementById(id).value) || 0;
+
+        const notas = {
+          av1: {
+            trabalho: obterValor("av1-trabalho"),
+            qstone: obterValor("av1-qstone"),
+          },
+          av2: {
+            trabalho: obterValor("av2-trabalho"),
+            qstone: obterValor("av2-qstone"),
+          },
+        };
+
+        const possuiDados = Array.from(DOM.entradas).some(
+          (input) => input.value !== ""
+        );
+
+        const mediaAv1 = calcularMediaPonderada(
+          notas.av1.trabalho,
+          notas.av1.qstone
+        );
+        const mediaAv2 = calcularMediaPonderada(
+          notas.av2.trabalho,
+          notas.av2.qstone
+        );
+        const mediaFinal = calcularMediaFinal(mediaAv1, mediaAv2);
+        const situacao = determinarSituacao(mediaFinal, possuiDados);
+
+        animarValorNumerico(
+          DOM.saidas.av1,
+          parseFloat(DOM.saidas.av1.textContent),
+          mediaAv1
+        );
+        animarValorNumerico(
+          DOM.saidas.av2,
+          parseFloat(DOM.saidas.av2.textContent),
+          mediaAv2
+        );
+        animarValorNumerico(
+          DOM.saidas.final,
+          parseFloat(DOM.saidas.final.textContent),
+          mediaFinal
+        );
+
+        atualizarVisualSituacao(situacao);
+        alternarEstadoBotaoCopiar(possuiDados);
+      }
+
+      async function copiarRelatorio() {
+        const obterValorTxt = (id) =>
+          document.getElementById(id).value || "0.00";
+        const obterTexto = (id) => document.getElementById(id).textContent;
+
+        const textoRelatorio =
+          `📊 *Relatório de Desempenho*\n\n` +
+          `*AV1*\n📝 Trabalho: ${obterValorTxt(
+            "av1-trabalho"
+          )}\n🧠 QStone: ${obterValorTxt("av1-qstone")}\n🔹 Média: ${obterTexto(
+            "resultado-av1"
+          )}\n\n` +
+          `*AV2*\n📝 Trabalho: ${obterValorTxt(
+            "av2-trabalho"
+          )}\n🧠 QStone: ${obterValorTxt("av2-qstone")}\n🔹 Média: ${obterTexto(
+            "resultado-av2"
+          )}\n\n` +
+          `-------------------\n` +
+          `🏆 *Média Final: ${obterTexto("resultado-final")}*\n` +
+          `${DOM.situacao.texto.textContent}`;
+
+        try {
+          await navigator.clipboard.writeText(textoRelatorio);
+          exibirFeedbackCopia(true);
+        } catch {
+          const areaTexto = document.createElement("textarea");
+          areaTexto.value = textoRelatorio;
+          document.body.appendChild(areaTexto);
+          areaTexto.select();
+          document.execCommand("copy");
+          document.body.removeChild(areaTexto);
+          exibirFeedbackCopia(true);
+        }
+      }
+
+      function exibirFeedbackCopia(sucesso) {
+        const botao = DOM.botoes.copiar;
+        const htmlOriginal = botao.innerHTML;
+
+        if (sucesso) {
+          botao.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>Copiado!</span>`;
+          botao.classList.remove("bg-indigo-600", "hover:bg-indigo-700");
+          botao.classList.add("bg-emerald-500", "scale-105");
+          lucide.createIcons();
+        }
+
+        setTimeout(() => {
+          botao.innerHTML = htmlOriginal;
+          botao.classList.remove("bg-emerald-500", "scale-105");
+          botao.classList.add("bg-indigo-600", "hover:bg-indigo-700");
+          lucide.createIcons();
+        }, 2000);
+      }
+
+      function inicializarAplicacao() {
+        lucide.createIcons();
+
+        // Delegação de Eventos para performance
+        DOM.formulario.addEventListener("input", (evento) => {
+          if (evento.target.classList.contains("campo-nota")) {
+            const valorHigienizado = higienizarEntrada(evento.target.value);
+            if (evento.target.value !== valorHigienizado) {
+              evento.target.value = valorHigienizado;
+            }
+            atualizarInterface();
+          }
+        });
+
+        DOM.botoes.limpar.addEventListener("click", () => {
+          DOM.entradas.forEach((input) => (input.value = ""));
+          atualizarInterface();
+        });
+
+        DOM.botoes.copiar.addEventListener("click", copiarRelatorio);
+
+        atualizarInterface();
+      }
+
+      document.addEventListener("DOMContentLoaded", inicializarAplicacao);
+    </script>
+  </body>
+</html>
