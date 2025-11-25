@@ -97,7 +97,12 @@ function higienizarEntrada(valor) {
 
 const FORMATADOR = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 function formatarNumero(numero) {
-  return FORMATADOR.format(Number(numero));
+  return FORMATADOR.format(Number(truncar(numero)));
+}
+
+function truncar(numero) {
+  const fator = Math.pow(10, REGRAS.LIMITES.CASAS_DECIMAIS);
+  return Math.trunc(Number(numero) * fator) / fator;
 }
 
 /* Animação suave de números */
@@ -167,10 +172,14 @@ function atualizarInterface() {
 
   const possuiDados = Array.from(DOM.entradas).some((input) => input.value.trim() !== "");
 
-  const mediaAv1 = calcularMediaPonderada(notas.av1.trabalho, notas.av1.qstone);
-  const mediaAv2 = calcularMediaPonderada(notas.av2.trabalho, notas.av2.qstone);
-  const mediaFinal = calcularMediaFinal(mediaAv1, mediaAv2);
-  const situacao = determinarSituacao(mediaFinal, possuiDados);
+  const mediaAv1Bruto = calcularMediaPonderada(notas.av1.trabalho, notas.av1.qstone);
+  const mediaAv2Bruto = calcularMediaPonderada(notas.av2.trabalho, notas.av2.qstone);
+  const mediaFinalBruta = calcularMediaFinal(mediaAv1Bruto, mediaAv2Bruto);
+
+  const mediaAv1 = mediaAv1Bruto;
+  const mediaAv2 = mediaAv2Bruto;
+  const mediaFinal = mediaFinalBruta;
+  const situacao = determinarSituacao(mediaFinalBruta, possuiDados);
 
   animarValorNumerico(DOM.saidas.av1, parseFloat(DOM.saidas.av1.textContent) || 0, mediaAv1);
   animarValorNumerico(DOM.saidas.av2, parseFloat(DOM.saidas.av2.textContent) || 0, mediaAv2);
@@ -277,6 +286,6 @@ function inicializarAplicacao() {
 document.addEventListener("DOMContentLoaded", () => {
   inicializarAplicacao();
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js').catch(() => { });
   }
 });

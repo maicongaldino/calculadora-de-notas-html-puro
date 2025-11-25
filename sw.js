@@ -6,13 +6,23 @@ const URLS_PARA_CACHE = [
   './css/estilos.css',
   './js/app.js',
   './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
+  './assets/icons/favicon.svg',
+  './assets/icons/icon-192.svg',
+  './assets/icons/icon-512.svg',
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_PARA_CACHE))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await Promise.all(URLS_PARA_CACHE.map(async (url) => {
+        try {
+          const resp = await fetch(url, { cache: 'no-cache' });
+          if (resp && resp.ok) {
+            await cache.put(url, resp.clone());
+          }
+        } catch { }
+      }));
+    })
   );
 });
 
@@ -36,7 +46,7 @@ self.addEventListener('fetch', (event) => {
           const isGet = request.method === 'GET';
           const isSameOrigin = url.origin === self.location.origin;
           if (isGet && isSameOrigin) {
-            cache.put(request, clone).catch(() => {});
+            cache.put(request, clone).catch(() => { });
           }
         });
         return networkResponse;
