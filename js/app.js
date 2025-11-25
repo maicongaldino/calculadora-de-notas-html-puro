@@ -45,6 +45,7 @@ const DOM = {
   botoes: {
     copiar: document.getElementById("botao-copiar"),
     limpar: document.getElementById("botao-limpar"),
+    tema: document.getElementById("botao-tema"),
   },
 };
 
@@ -252,6 +253,8 @@ function inicializarAplicacao() {
   if (window.lucide && typeof window.lucide.createIcons === "function") {
     window.lucide.createIcons();
   }
+  const temaInicial = obterTemaInicial();
+  aplicarTema(temaInicial);
   const debouncedAtualizar = criarDebounce(atualizarInterface, 150);
   DOM.formulario.addEventListener("input", (evento) => {
     if (evento.target.classList.contains("campo-nota")) {
@@ -279,6 +282,12 @@ function inicializarAplicacao() {
   });
 
   DOM.botoes.copiar.addEventListener("click", copiarRelatorio);
+  if (DOM.botoes.tema) {
+    DOM.botoes.tema.addEventListener("click", () => {
+      const atual = document.documentElement.classList.contains('dark') ? 'escuro' : 'claro';
+      aplicarTema(atual === 'escuro' ? 'claro' : 'escuro');
+    });
+  }
 
   atualizarInterface();
 }
@@ -286,6 +295,30 @@ function inicializarAplicacao() {
 document.addEventListener("DOMContentLoaded", () => {
   inicializarAplicacao();
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => { });
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
   }
 });
+
+function obterTemaInicial() {
+  const salvo = localStorage.getItem('tema');
+  if (salvo === 'escuro' || salvo === 'claro') return salvo;
+  const prefereEscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return prefereEscuro ? 'escuro' : 'claro';
+}
+
+function aplicarTema(tema) {
+  const escuro = tema === 'escuro';
+  document.documentElement.classList.toggle('dark', escuro);
+  document.body.classList.toggle('dark', escuro);
+  localStorage.setItem('tema', tema);
+  atualizarBotaoTema(escuro);
+}
+
+function atualizarBotaoTema(escuro) {
+  const botao = DOM.botoes.tema;
+  if (!botao) return;
+  botao.innerHTML = `<i data-lucide="${escuro ? 'sun' : 'moon'}" class="w-4 h-4"></i><span>${escuro ? 'Claro' : 'Escuro'}</span>`;
+  if (window.lucide && typeof window.lucide.createIcons === "function") {
+    window.lucide.createIcons();
+  }
+}

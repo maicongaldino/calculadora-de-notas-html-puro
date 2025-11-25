@@ -42,7 +42,7 @@
 
   <body class="min-h-screen flex items-center justify-center p-4">
     <main
-      class="painel-vidro w-full max-w-lg p-6 md:p-8 rounded-2xl shadow-2xl relative overflow-hidden"
+      class="painel-vidro w-full max-w-xl md:max-w-2xl p-6 md:p-8 rounded-2xl shadow-2xl relative overflow-hidden"
       role="main"
       aria-labelledby="titulo-principal"
     >
@@ -50,6 +50,16 @@
         class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 to-indigo-500"
         aria-hidden="true"
       ></div>
+
+      <button
+        id="botao-tema"
+        type="button"
+        class="absolute top-4 right-4 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full px-3 py-1.5 text-xs font-semibold flex items-center gap-1 shadow-sm border border-gray-200 dark:border-gray-700"
+        aria-label="Alternar tema"
+      >
+        <i data-lucide="moon" class="w-4 h-4"></i>
+        <span>Escuro</span>
+      </button>
 
       <header class="text-center mb-6">
         <div
@@ -60,18 +70,18 @@
         </div>
         <h1
           id="titulo-principal"
-          class="text-2xl md:text-3xl font-bold text-gray-800"
+          class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100"
         >
           Minhas Notas
         </h1>
-        <p class="text-gray-500 text-sm font-medium">
+        <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">
           Controle de desempenho acadêmico
         </p>
       </header>
 
       <form id="formulario-notas" class="space-y-6" novalidate>
         <fieldset
-          class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 transition-colors hover:border-indigo-200"
+          class="bg-indigo-50/50 dark:bg-slate-800/50 p-5 rounded-xl border border-indigo-100 dark:border-slate-700 transition-colors hover:border-indigo-200"
           aria-labelledby="titulo-av1"
         >
           <legend class="sr-only">Avaliação 1 (AV1)</legend>
@@ -91,7 +101,7 @@
             <div class="space-y-1">
               <label
                 for="av1-trabalho"
-                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
               >
                 Trabalho (60%)
               </label>
@@ -103,7 +113,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do trabalho AV1 (60 por cento)"
                 autocomplete="off"
               />
@@ -112,7 +122,7 @@
             <div class="space-y-1">
               <label
                 for="av1-qstone"
-                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
               >
                 QStone (40%)
               </label>
@@ -124,7 +134,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do QStone AV1 (40 por cento)"
                 autocomplete="off"
               />
@@ -132,10 +142,10 @@
           </div>
 
           <div
-            class="flex justify-between items-center bg-white px-4 py-2 rounded-lg border border-indigo-100 shadow-sm"
+            class="flex justify-between items-center bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-indigo-100 dark:border-slate-700 shadow-sm"
           >
             <span
-              class="text-xs md:text-sm font-bold uppercase tracking-wide text-indigo-600 bg-indigo-50 px-2 py-1 rounded"
+              class="text-xs md:text-sm font-bold uppercase tracking-wide text-indigo-600 bg-indigo-50 dark:text-indigo-300 dark:bg-indigo-900/30 px-2 py-1 rounded"
             >
               Média Parcial
             </span>
@@ -152,7 +162,7 @@
         </fieldset>
 
         <fieldset
-          class="bg-purple-50/50 p-5 rounded-xl border border-purple-100 transition-colors hover:border-purple-200"
+          class="bg-purple-50/50 dark:bg-slate-800/50 p-5 rounded-xl border border-purple-100 dark:border-slate-700 transition-colors hover:border-purple-200"
           aria-labelledby="titulo-av2"
         >
           <legend class="sr-only">Avaliação 2 (AV2)</legend>
@@ -172,7 +182,7 @@
             <div class="space-y-1">
               <label
                 for="av2-trabalho"
-                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
               >
                 Trabalho (60%)
               </label>
@@ -184,7 +194,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do trabalho AV2 (60 por cento)"
                 autocomplete="off"
               />
@@ -193,7 +203,7 @@
             <div class="space-y-1">
               <label
                 for="av2-qstone"
-                class="block text-xs font-semibold text-gray-500 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
               >
                 QStone (40%)
               </label>
@@ -205,7 +215,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do QStone AV2 (40 por cento)"
                 autocomplete="off"
               />
@@ -213,10 +223,10 @@
           </div>
 
           <div
-            class="flex justify-between items-center bg-white px-4 py-2 rounded-lg border border-purple-100 shadow-sm"
+            class="flex justify-between items-center bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-purple-100 dark:border-slate-700 shadow-sm"
           >
             <span
-              class="text-xs md:text-sm font-bold uppercase tracking-wide text-purple-600 bg-purple-50 px-2 py-1 rounded"
+              class="text-xs md:text-sm font-bold uppercase tracking-wide text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/30 px-2 py-1 rounded"
             >
               Média Parcial
             </span>
@@ -233,7 +243,7 @@
         </fieldset>
 
         <section
-          class="bg-gray-900 text-white p-5 md:p-6 rounded-2xl shadow-xl transform transition-transform duration-300 hover:scale-[1.02]"
+          class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-5 md:p-6 rounded-2xl shadow-xl transform transition-transform duration-300 hover:scale-[1.02] border border-gray-200 dark:border-gray-800"
           aria-label="Resultado da média final"
         >
           <div
@@ -241,24 +251,24 @@
           >
             <div>
               <p
-                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                class="text-gray-600 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
               >
                 Situação Acadêmica
               </p>
               <div class="flex items-center gap-2.5">
                 <span
                   id="icone-situacao"
-                  class="flex items-center justify-center bg-gray-800 rounded-full p-1"
+                  class="flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full p-1"
                   aria-hidden="true"
                 >
                   <i
                     data-lucide="circle-dashed"
-                    class="w-5 h-5 text-gray-400"
+                    class="w-5 h-5 text-gray-600 dark:text-gray-300"
                   ></i>
                 </span>
                 <span
                   id="texto-situacao"
-                  class="text-sm font-semibold text-gray-300"
+                  class="text-sm font-semibold text-gray-700 dark:text-gray-200"
                   aria-live="polite"
                 >
                   Aguardando dados...
