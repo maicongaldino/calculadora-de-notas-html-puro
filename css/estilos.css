@@ -1,0 +1,79 @@
+:root {
+  --fonte-principal: "Poppins", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* Tipografia e fundo geral */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--fonte-principal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Painel com efeito de vidro */
+.painel-vidro {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+/* Ajuste de inputs numéricos visuais */
+.campo-nota {
+  -moz-appearance: textfield;
+}
+.campo-nota::-webkit-outer-spin-button,
+.campo-nota::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Responsividade leve para fontes grandes */
+@media (max-width: 420px) {
+  .texto-grande {
+    font-size: 2rem;
+  }
+}
+
+/* foco visível acessível */
+.campo-nota:focus-visible,
+button:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* estado de erro leve */
+.campo-invalido {
+  border-color: #fca5a5; /* red-300 */
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15); /* red-500/15 */
+}
+
+/* reduzir animações para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* impressão básica: mostra resultados, esconde botões e fundos decorativos */
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+  .painel-vidro {
+    box-shadow: none !important;
+    border: none !important;
+  }
+  #botao-copiar,
+  #botao-limpar,
+  #icone-situacao {
+    display: none !important;
+  }
+}

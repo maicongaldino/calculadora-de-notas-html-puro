@@ -1,0 +1,17 @@
+{
+  "name": "Calculadora de Notas",
+  "short_name": "Notas",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "description": "Calculadora simples de médias com AV1/AV2 e situação.",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

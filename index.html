@@ -15,6 +15,14 @@
     />
     <meta name="author" content="Maicon Galdino" />
 
+    <meta name="theme-color" content="#4f46e5" />
+    <meta property="og:title" content="Calculadora de Notas" />
+    <meta property="og:description" content="AV1 e AV2 com média e situação acadêmica." />
+    <meta property="og:type" content="website" />
+
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -26,48 +34,7 @@
       rel="stylesheet"
     />
 
-    <style>
-      :root {
-        --fonte-principal: "Poppins", system-ui, -apple-system, "Segoe UI",
-          Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol";
-      }
-
-      /* Reset mínimo e tipografia */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        font-family: var(--fonte-principal);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-
-      /* Vidro suave para o painel */
-      .painel-vidro {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.28);
-      }
-
-      /* Inputs centralizados com tabulação numérica */
-      .campo-nota {
-        -moz-appearance: textfield;
-      }
-      .campo-nota::-webkit-outer-spin-button,
-      .campo-nota::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      /* Pequenas correções responsivas */
-      @media (max-width: 420px) {
-        .texto-grande {
-          font-size: 2rem;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./css/estilos.css" />
   </head>
 
   <body class="min-h-screen flex items-center justify-center p-4">
@@ -99,12 +66,13 @@
       <form id="formulario-notas" class="space-y-6" novalidate>
         <fieldset
           class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 transition-colors hover:border-indigo-200"
+          aria-labelledby="titulo-av1"
         >
           <legend class="sr-only">Avaliação 1 (AV1)</legend>
 
           <div class="flex items-center gap-2 mb-4">
             <i data-lucide="calculator" class="w-4 h-4 text-indigo-500"></i>
-            <span class="font-semibold text-gray-700">Avaliação 1 (AV1)</span>
+            <span id="titulo-av1" class="font-semibold text-gray-700">Avaliação 1 (AV1)</span>
           </div>
 
           <div class="grid grid-cols-2 gap-4 mb-4" role="group" aria-label="Notas AV1">
@@ -121,6 +89,8 @@
                 id="av1-trabalho"
                 name="av1-trabalho"
                 placeholder="0,0"
+                pattern="^\d{1,2}([.,]\d{1,2})?$"
+                maxlength="5"
                 class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
                 aria-label="Nota do trabalho AV1 (60 por cento)"
                 autocomplete="off"
@@ -140,6 +110,8 @@
                 id="av1-qstone"
                 name="av1-qstone"
                 placeholder="0,0"
+                pattern="^\d{1,2}([.,]\d{1,2})?$"
+                maxlength="5"
                 class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
                 aria-label="Nota do QStone AV1 (40 por cento)"
                 autocomplete="off"
@@ -158,6 +130,7 @@
               class="text-indigo-600 font-bold text-lg"
               aria-live="polite"
               aria-atomic="true"
+              role="status"
             >
               0.00
             </output>
@@ -166,12 +139,13 @@
 
         <fieldset
           class="bg-purple-50/50 p-5 rounded-xl border border-purple-100 transition-colors hover:border-purple-200"
+          aria-labelledby="titulo-av2"
         >
           <legend class="sr-only">Avaliação 2 (AV2)</legend>
 
           <div class="flex items-center gap-2 mb-4">
             <i data-lucide="calculator" class="w-4 h-4 text-purple-500"></i>
-            <span class="font-semibold text-gray-700">Avaliação 2 (AV2)</span>
+            <span id="titulo-av2" class="font-semibold text-gray-700">Avaliação 2 (AV2)</span>
           </div>
 
           <div class="grid grid-cols-2 gap-4 mb-4" role="group" aria-label="Notas AV2">
@@ -188,6 +162,8 @@
                 id="av2-trabalho"
                 name="av2-trabalho"
                 placeholder="0,0"
+                pattern="^\d{1,2}([.,]\d{1,2})?$"
+                maxlength="5"
                 class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
                 aria-label="Nota do trabalho AV2 (60 por cento)"
                 autocomplete="off"
@@ -207,6 +183,8 @@
                 id="av2-qstone"
                 name="av2-qstone"
                 placeholder="0,0"
+                pattern="^\d{1,2}([.,]\d{1,2})?$"
+                maxlength="5"
                 class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 transition-all shadow-sm"
                 aria-label="Nota do QStone AV2 (40 por cento)"
                 autocomplete="off"
@@ -225,6 +203,7 @@
               class="text-purple-600 font-bold text-lg"
               aria-live="polite"
               aria-atomic="true"
+              role="status"
             >
               0.00
             </output>
@@ -263,6 +242,7 @@
                 id="resultado-final"
                 class="texto-grande text-5xl font-bold tracking-tighter tabular-nums"
                 aria-label="Nota final calculada"
+                role="status"
               >
                 0.00
               </output>
@@ -295,258 +275,10 @@
       </form>
     </main>
 
-    <script>
-      /* Regras e constantes imutáveis */
-      const REGRAS = Object.freeze({
-        PESOS: { TRABALHO: 0.6, QSTONE: 0.4 },
-        LIMITES: { MIN: 0, MAX: 10, CASAS_DECIMAIS: 2 },
-        SITUACAO: {
-          APROVADO: {
-            notaCorte: 6,
-            texto: "Aprovado! Parabéns",
-            classeCor: "text-emerald-400",
-            icone: "check-circle-2",
-          },
-          RECUPERACAO: {
-            notaCorte: 4,
-            texto: "Reavaliação Necessária",
-            classeCor: "text-yellow-400",
-            icone: "alert-circle",
-          },
-          REPROVADO: {
-            texto: "Reprovado",
-            classeCor: "text-red-400",
-            icone: "x-circle",
-          },
-          PADRAO: {
-            texto: "Aguardando dados...",
-            classeCor: "text-gray-300",
-            icone: "circle-dashed",
-          },
-        },
-        ANIMACAO: { DURACAO_MS: 600 },
-      });
+    <noscript>
+      Para usar a calculadora, habilite JavaScript no navegador.
+    </noscript>
 
-      /* Elementos DOM usados (nomes em português e semânticos) */
-      const DOM = {
-        formulario: document.getElementById("formulario-notas"),
-        entradas: document.querySelectorAll(".campo-nota"),
-        saidas: {
-          av1: document.getElementById("resultado-av1"),
-          av2: document.getElementById("resultado-av2"),
-          final: document.getElementById("resultado-final"),
-        },
-        situacao: {
-          texto: document.getElementById("texto-situacao"),
-          containerIcone: document.getElementById("icone-situacao"),
-        },
-        botoes: {
-          copiar: document.getElementById("botao-copiar"),
-          limpar: document.getElementById("botao-limpar"),
-        },
-      };
-
-      /* Cálculos puros */
-      function calcularMediaPonderada(notaTrabalho, notaQstone) {
-        return notaTrabalho * REGRAS.PESOS.TRABALHO + notaQstone * REGRAS.PESOS.QSTONE;
-      }
-
-      function calcularMediaFinal(notaAv1, notaAv2) {
-        return (notaAv1 + notaAv2) / 2;
-      }
-
-      function determinarSituacao(notaFinal, possuiDados) {
-        if (!possuiDados) return REGRAS.SITUACAO.PADRAO;
-        if (notaFinal >= REGRAS.SITUACAO.APROVADO.notaCorte) return REGRAS.SITUACAO.APROVADO;
-        if (notaFinal >= REGRAS.SITUACAO.RECUPERACAO.notaCorte) return REGRAS.SITUACAO.RECUPERACAO;
-        return REGRAS.SITUACAO.REPROVADO;
-      }
-
-      /* Validação e higienização de entrada (aceita vírgula e ponto) */
-      function higienizarEntrada(valor) {
-        if (!valor) return "";
-
-        // aceita vírgula como separador e converte para ponto
-        valor = String(valor).replace(",", ".");
-
-        // remove tudo que não for dígito ou ponto
-        let valorLimpo = valor.replace(/[^0-9.]/g, "");
-
-        // evita múltiplos pontos (mantém o primeiro como separador)
-        const partes = valorLimpo.split(".");
-        if (partes.length > 2) {
-          valorLimpo = partes[0] + "." + partes.slice(1).join("");
-        }
-
-        const numero = parseFloat(valorLimpo);
-        if (isNaN(numero)) return "";
-
-        if (numero > REGRAS.LIMITES.MAX) return REGRAS.LIMITES.MAX.toString();
-
-        if (valorLimpo.includes(".")) {
-          const [inteiro, decimal = ""] = valorLimpo.split(".");
-          if (decimal.length > REGRAS.LIMITES.CASAS_DECIMAIS) {
-            return `${inteiro}.${decimal.substring(0, REGRAS.LIMITES.CASAS_DECIMAIS)}`;
-          }
-        }
-
-        return valorLimpo;
-      }
-
-      function formatarNumero(numero) {
-        return Number(numero).toFixed(REGRAS.LIMITES.CASAS_DECIMAIS);
-      }
-
-      /* Animação suave de números */
-      function animarValorNumerico(elemento, valorInicial, valorFinal) {
-        valorInicial = Number(valorInicial) || 0;
-        valorFinal = Number(valorFinal) || 0;
-        if (valorInicial === valorFinal) {
-          elemento.textContent = formatarNumero(valorFinal);
-          return;
-        }
-
-        const delta = valorFinal - valorInicial;
-        let inicioTimestamp = null;
-
-        function passoAnimacao(timestamp) {
-          if (!inicioTimestamp) inicioTimestamp = timestamp;
-          const progresso = Math.min((timestamp - inicioTimestamp) / REGRAS.ANIMACAO.DURACAO_MS, 1);
-          const suavizacao = progresso === 1 ? 1 : 1 - Math.pow(2, -10 * progresso);
-          const valorAtual = valorInicial + delta * suavizacao;
-          elemento.textContent = formatarNumero(valorAtual);
-          if (progresso < 1) requestAnimationFrame(passoAnimacao);
-        }
-
-        requestAnimationFrame(passoAnimacao);
-      }
-
-      /* Atualiza visual da situação (texto + ícone) */
-      function atualizarVisualSituacao(configuracao) {
-        const { texto, classeCor, icone } = configuracao;
-        DOM.situacao.texto.textContent = texto;
-        DOM.situacao.texto.className = `text-sm font-semibold transition-colors duration-300 ${classeCor}`;
-
-        const iconeAtual = DOM.situacao.containerIcone.querySelector("svg")?.getAttribute("data-lucide");
-        if (iconeAtual !== icone) {
-          DOM.situacao.containerIcone.innerHTML = `<i data-lucide="${icone}" class="w-5 h-5 ${classeCor}"></i>`;
-          lucide.createIcons();
-        }
-      }
-
-      function alternarEstadoBotaoCopiar(ativo) {
-        const botao = DOM.botoes.copiar;
-        const classesDesabilitadas = ["opacity-50", "cursor-not-allowed"];
-        botao.disabled = !ativo;
-        if (ativo) {
-          botao.classList.remove(...classesDesabilitadas);
-        } else {
-          botao.classList.add(...classesDesabilitadas);
-        }
-      }
-
-      /* Lógica de interface: leitura, cálculo e atualização das saídas */
-      function atualizarInterface() {
-        const obterValor = (id) => parseFloat(document.getElementById(id).value.replace(",", ".").trim()) || 0;
-
-        const notas = {
-          av1: {
-            trabalho: obterValor("av1-trabalho"),
-            qstone: obterValor("av1-qstone"),
-          },
-          av2: {
-            trabalho: obterValor("av2-trabalho"),
-            qstone: obterValor("av2-qstone"),
-          },
-        };
-
-        const possuiDados = Array.from(DOM.entradas).some((input) => input.value.trim() !== "");
-
-        const mediaAv1 = calcularMediaPonderada(notas.av1.trabalho, notas.av1.qstone);
-        const mediaAv2 = calcularMediaPonderada(notas.av2.trabalho, notas.av2.qstone);
-        const mediaFinal = calcularMediaFinal(mediaAv1, mediaAv2);
-        const situacao = determinarSituacao(mediaFinal, possuiDados);
-
-        animarValorNumerico(DOM.saidas.av1, parseFloat(DOM.saidas.av1.textContent) || 0, mediaAv1);
-        animarValorNumerico(DOM.saidas.av2, parseFloat(DOM.saidas.av2.textContent) || 0, mediaAv2);
-        animarValorNumerico(DOM.saidas.final, parseFloat(DOM.saidas.final.textContent) || 0, mediaFinal);
-
-        atualizarVisualSituacao(situacao);
-        alternarEstadoBotaoCopiar(possuiDados);
-      }
-
-      /* Copiar relatório para área de transferência (com fallback) */
-      async function copiarRelatorio() {
-        const obterValorTxt = (id) => document.getElementById(id).value || "0.00";
-        const obterTexto = (id) => document.getElementById(id).textContent;
-
-        const textoRelatorio =
-          `📊 Relatório de Desempenho\n\n` +
-          `AV1\nTrabalho: ${obterValorTxt("av1-trabalho")}\nQStone: ${obterValorTxt("av1-qstone")}\nMédia: ${obterTexto("resultado-av1")}\n\n` +
-          `AV2\nTrabalho: ${obterValorTxt("av2-trabalho")}\nQStone: ${obterValorTxt("av2-qstone")}\nMédia: ${obterTexto("resultado-av2")}\n\n` +
-          `-------------------\n` +
-          `Média Final: ${obterTexto("resultado-final")}\n` +
-          `${DOM.situacao.texto.textContent}`;
-
-        try {
-          await navigator.clipboard.writeText(textoRelatorio);
-          exibirFeedbackCopia(true);
-        } catch {
-          const areaTexto = document.createElement("textarea");
-          areaTexto.value = textoRelatorio;
-          document.body.appendChild(areaTexto);
-          areaTexto.select();
-          document.execCommand("copy");
-          document.body.removeChild(areaTexto);
-          exibirFeedbackCopia(true);
-        }
-      }
-
-      function exibirFeedbackCopia(sucesso) {
-        const botao = DOM.botoes.copiar;
-        const htmlOriginal = botao.innerHTML;
-
-        if (sucesso) {
-          botao.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>Copiado!</span>`;
-          botao.classList.remove("bg-indigo-600", "hover:bg-indigo-700");
-          botao.classList.add("bg-emerald-500", "scale-105");
-          lucide.createIcons();
-        }
-
-        setTimeout(() => {
-          botao.innerHTML = htmlOriginal;
-          botao.classList.remove("bg-emerald-500", "scale-105");
-          botao.classList.add("bg-indigo-600", "hover:bg-indigo-700");
-          lucide.createIcons();
-        }, 1600);
-      }
-
-      /* Inicialização: delegação de eventos e setup */
-      function inicializarAplicacao() {
-        lucide.createIcons();
-
-        DOM.formulario.addEventListener("input", (evento) => {
-          if (evento.target.classList.contains("campo-nota")) {
-            const valorHigienizado = higienizarEntrada(evento.target.value);
-            if (evento.target.value !== valorHigienizado) {
-              evento.target.value = valorHigienizado;
-            }
-            atualizarInterface();
-          }
-        });
-
-        DOM.botoes.limpar.addEventListener("click", () => {
-          DOM.entradas.forEach((input) => (input.value = ""));
-          atualizarInterface();
-          DOM.entradas[0]?.focus();
-        });
-
-        DOM.botoes.copiar.addEventListener("click", copiarRelatorio);
-
-        atualizarInterface();
-      }
-
-      document.addEventListener("DOMContentLoaded", inicializarAplicacao);
-    </script>
+    <script src="./js/app.js" defer></script>
   </body>
 </html>
