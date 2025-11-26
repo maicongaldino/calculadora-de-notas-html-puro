@@ -1,32 +1,4 @@
-const REGRAS = Object.freeze({
-  PESOS: { TRABALHO: 0.6, QSTONE: 0.4 },
-  LIMITES: { MIN: 0, MAX: 10, CASAS_DECIMAIS: 2 },
-  SITUACAO: {
-    APROVADO: {
-      notaCorte: 6,
-      texto: "Aprovado! Parabéns",
-      classeCor: "text-emerald-400",
-      icone: "check-circle-2",
-    },
-    RECUPERACAO: {
-      notaCorte: 4,
-      texto: "Reavaliação Necessária",
-      classeCor: "text-yellow-400",
-      icone: "alert-circle",
-    },
-    REPROVADO: {
-      texto: "Reprovado",
-      classeCor: "text-red-400",
-      icone: "x-circle",
-    },
-    PADRAO: {
-      texto: "Aguardando dados...",
-      classeCor: "text-gray-300",
-      icone: "circle-dashed",
-    },
-  },
-  ANIMACAO: { DURACAO_MS: 600 },
-});
+const REGRAS = window.REGRAS;
 
 const DOM = {
   formulario: document.getElementById("formulario-notas"),
@@ -35,6 +7,8 @@ const DOM = {
     av1: document.getElementById("resultado-av1"),
     av2: document.getElementById("resultado-av2"),
     final: document.getElementById("resultado-final"),
+    meta: document.getElementById("meta-av2"),
+    metaMsg: document.getElementById("meta-av2-msg"),
   },
   situacao: {
     texto: document.getElementById("texto-situacao"),
@@ -43,23 +17,12 @@ const DOM = {
   botoes: {
     copiar: document.getElementById("botao-copiar"),
     limpar: document.getElementById("botao-limpar"),
+    compartilhar: document.getElementById("botao-compartilhar"),
+    meta: document.getElementById("botao-meta"),
   },
 };
 
-function calcularMediaPonderada(notaTrabalho, notaQstone) {
-  return notaTrabalho * REGRAS.PESOS.TRABALHO + notaQstone * REGRAS.PESOS.QSTONE;
-}
-
-function calcularMediaFinal(notaAv1, notaAv2) {
-  return (notaAv1 + notaAv2) / 2;
-}
-
-function determinarSituacao(notaFinal, possuiDados) {
-  if (!possuiDados) return REGRAS.SITUACAO.PADRAO;
-  if (notaFinal >= REGRAS.SITUACAO.APROVADO.notaCorte) return REGRAS.SITUACAO.APROVADO;
-  if (notaFinal >= REGRAS.SITUACAO.RECUPERACAO.notaCorte) return REGRAS.SITUACAO.RECUPERACAO;
-  return REGRAS.SITUACAO.REPROVADO;
-}
+const Core = window.Core;
 
 function higienizarEntrada(valor) {
   if (!valor) return "";
@@ -85,15 +48,7 @@ function higienizarEntrada(valor) {
   return valorLimpo;
 }
 
-const FORMATADOR = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-function formatarNumero(numero) {
-  return FORMATADOR.format(Number(truncar(numero)));
-}
-
-function truncar(numero) {
-  const fator = Math.pow(10, REGRAS.LIMITES.CASAS_DECIMAIS);
-  return Math.trunc(Number(numero) * fator) / fator;
-}
+function formatarNumero(n) { return Core.formatarNumero(n); }
 
 function animarValorNumerico(elemento, valorInicial, valorFinal) {
   valorInicial = Number(valorInicial) || 0;
@@ -159,21 +114,30 @@ function atualizarInterface() {
 
   const possuiDados = Array.from(DOM.entradas).some((input) => input.value.trim() !== "");
 
-  const mediaAv1Bruto = calcularMediaPonderada(notas.av1.trabalho, notas.av1.qstone);
-  const mediaAv2Bruto = calcularMediaPonderada(notas.av2.trabalho, notas.av2.qstone);
-  const mediaFinalBruta = calcularMediaFinal(mediaAv1Bruto, mediaAv2Bruto);
+  const mediaAv1Bruto = Core.calcularMediaPonderada(notas.av1.trabalho, notas.av1.qstone);
+  const mediaAv2Bruto = Core.calcularMediaPonderada(notas.av2.trabalho, notas.av2.qstone);
+  const mediaFinalBruta = Core.calcularMediaFinal(mediaAv1Bruto, mediaAv2Bruto);
 
   const mediaAv1 = mediaAv1Bruto;
   const mediaAv2 = mediaAv2Bruto;
   const mediaFinal = mediaFinalBruta;
-  const situacao = determinarSituacao(mediaFinalBruta, possuiDados);
+  const situacao = Core.determinarSituacao(mediaFinalBruta, possuiDados);
 
   animarValorNumerico(DOM.saidas.av1, parseFloat(DOM.saidas.av1.textContent) || 0, mediaAv1);
   animarValorNumerico(DOM.saidas.av2, parseFloat(DOM.saidas.av2.textContent) || 0, mediaAv2);
   animarValorNumerico(DOM.saidas.final, parseFloat(DOM.saidas.final.textContent) || 0, mediaFinal);
+  atualizarMetaAprovacao(mediaAv1Bruto);
 
   atualizarVisualSituacao(situacao);
   alternarEstadoBotaoCopiar(possuiDados);
+}
+
+function atualizarMetaAprovacao(mediaAv1) {
+  const corte = REGRAS.SITUACAO.APROVADO.notaCorte;
+  const necessarioAv2 = Math.max(0, 2 * corte - mediaAv1);
+  const ok = necessarioAv2 <= REGRAS.LIMITES.MAX;
+  if (DOM.saidas.meta) DOM.saidas.meta.textContent = formatarNumero(necessarioAv2);
+  if (DOM.saidas.metaMsg) DOM.saidas.metaMsg.textContent = ok ? "" : "Impossível alcançar com limite de 10,0";
 }
 
 async function copiarRelatorio() {
@@ -238,6 +202,7 @@ function inicializarAplicacao() {
     window.lucide.createIcons();
   }
   const debouncedAtualizar = criarDebounce(atualizarInterface, 150);
+  const debouncedAtualizarRota = criarDebounce(atualizarQuerystring, 150);
   DOM.formulario.addEventListener("input", (evento) => {
     if (evento.target.classList.contains("campo-nota")) {
       const valorHigienizado = higienizarEntrada(evento.target.value);
@@ -249,11 +214,34 @@ function inicializarAplicacao() {
       if (invalido) {
         evento.target.setAttribute('aria-invalid', 'true');
         evento.target.classList.add('campo-invalido');
+        const mapaErros = {
+          'av1-trabalho': 'erro-av1-trabalho',
+          'av1-qstone': 'erro-av1-qstone',
+          'av2-trabalho': 'erro-av2-trabalho',
+          'av2-qstone': 'erro-av2-qstone',
+        };
+        const idErro = mapaErros[evento.target.id];
+        if (idErro) {
+          const el = document.getElementById(idErro);
+          if (el) el.classList.remove('hidden');
+        }
       } else {
         evento.target.removeAttribute('aria-invalid');
         evento.target.classList.remove('campo-invalido');
+        const mapaErros = {
+          'av1-trabalho': 'erro-av1-trabalho',
+          'av1-qstone': 'erro-av1-qstone',
+          'av2-trabalho': 'erro-av2-trabalho',
+          'av2-qstone': 'erro-av2-qstone',
+        };
+        const idErro = mapaErros[evento.target.id];
+        if (idErro) {
+          const el = document.getElementById(idErro);
+          if (el) el.classList.add('hidden');
+        }
       }
       debouncedAtualizar();
+      debouncedAtualizarRota();
     }
   });
 
@@ -264,13 +252,88 @@ function inicializarAplicacao() {
   });
 
   DOM.botoes.copiar.addEventListener("click", copiarRelatorio);
+  if (DOM.botoes.compartilhar) DOM.botoes.compartilhar.addEventListener("click", compartilharLink);
+  if (DOM.botoes.meta) DOM.botoes.meta.addEventListener("click", () => {
+    const sec = document.getElementById("secao-meta");
+    const visivel = !sec.classList.contains("hidden");
+    sec.classList.toggle("hidden", visivel);
+    DOM.botoes.meta.setAttribute("aria-expanded", String(!visivel));
+    DOM.botoes.meta.querySelector("span").textContent = visivel ? "Mostrar Meta de Aprovação" : "Ocultar Meta de Aprovação";
+  });
+
+  DOM.formulario.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.classList.contains("campo-nota")) {
+      e.preventDefault();
+      const campos = Array.from(DOM.entradas);
+      const idx = campos.indexOf(e.target);
+      const prox = campos[idx + 1] || campos[0];
+      prox.focus();
+    }
+  });
 
   atualizarInterface();
+  carregarDeQuerystring();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   inicializarAplicacao();
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => { });
+    navigator.serviceWorker.register('./sw.js').then(() => {
+      const b = document.getElementById("badge-offline");
+      if (b) b.classList.remove("hidden");
+    }).catch(() => { });
   }
 });
+
+function obterValoresAtuais() {
+  return {
+    av1t: document.getElementById("av1-trabalho").value,
+    av1q: document.getElementById("av1-qstone").value,
+    av2t: document.getElementById("av2-trabalho").value,
+    av2q: document.getElementById("av2-qstone").value,
+  };
+}
+
+function compartilharLink() {
+  const v = obterValoresAtuais();
+  const params = new URLSearchParams({
+    'av1-trabalho': v.av1t,
+    'av1-qstone': v.av1q,
+    'av2-trabalho': v.av2t,
+    'av2-qstone': v.av2q,
+  });
+  const url = `${location.origin}${location.pathname}?${params.toString()}`;
+  navigator.clipboard.writeText(url).then(() => exibirFeedbackCopia(true));
+}
+
+function carregarDeQuerystring() {
+  const p = new URLSearchParams(location.search);
+  [
+    ["av1-trabalho","av1-trabalho","av1t"],
+    ["av1-qstone","av1-qstone","av1q"],
+    ["av2-trabalho","av2-trabalho","av2t"],
+    ["av2-qstone","av2-qstone","av2q"],
+  ]
+    .forEach(([id,keyFull,keyShort])=>{ 
+      const val = p.get(keyFull) ?? p.get(keyShort);
+      if (val!==null) document.getElementById(id).value = String(val).replace(".", ",");
+    });
+  atualizarInterface();
+}
+
+function atualizarQuerystring() {
+  const v = obterValoresAtuais();
+  const params = new URLSearchParams(location.search);
+  const setOrDelete = (key, val) => {
+    const s = String(val).trim();
+    if (s) params.set(key, s.replace(',', '.'));
+    else params.delete(key);
+  };
+  setOrDelete('av1-trabalho', v.av1t);
+  setOrDelete('av1-qstone', v.av1q);
+  setOrDelete('av2-trabalho', v.av2t);
+  setOrDelete('av2-qstone', v.av2q);
+  const newUrl = `${location.pathname}?${params.toString()}`;
+  history.replaceState(null, '', newUrl);
+}
+

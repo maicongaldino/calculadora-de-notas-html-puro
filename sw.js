@@ -32,6 +32,7 @@ self.addEventListener('activate', (event) => {
       keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
     ))
   );
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
