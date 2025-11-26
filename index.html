@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="./css/estilos.css" />
   </head>
 
-  <body class="min-h-screen flex items-center justify-center p-4">
+  <body class="dark min-h-screen flex items-center justify-center p-4">
     <main
       class="painel-vidro w-full max-w-xl md:max-w-2xl p-6 md:p-8 rounded-2xl shadow-2xl relative overflow-visible"
       role="main"
@@ -51,16 +51,6 @@
         aria-hidden="true"
       ></div>
 
-      <button
-        id="botao-tema"
-        type="button"
-        class="absolute top-4 right-4 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full px-3 py-1.5 text-xs font-semibold flex items-center gap-1 shadow-sm border border-gray-200 dark:border-gray-700"
-        aria-label="Alternar tema"
-      >
-        <i data-lucide="moon" class="w-4 h-4"></i>
-        <span>Escuro</span>
-      </button>
-
       <header class="text-center mb-6 relative z-10">
         <div
           class="inline-flex justify-center items-center bg-indigo-50 p-3 rounded-full mb-4 shadow-sm"
@@ -70,25 +60,27 @@
         </div>
         <h1
           id="titulo-principal"
-          class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100"
+          class="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100"
         >
           Minhas Notas
         </h1>
-        <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">
+        <p class="text-gray-800 dark:text-gray-400 text-sm font-medium">
           Controle de desempenho acadêmico
         </p>
       </header>
 
       <form id="formulario-notas" class="space-y-6" novalidate>
         <fieldset
-          class="bg-indigo-50/50 dark:bg-slate-800/50 p-5 rounded-xl border border-indigo-100 dark:border-slate-700 transition-colors hover:border-indigo-200"
+          class="bg-gray-100 dark:bg-slate-800/50 p-5 rounded-xl border border-gray-300 dark:border-slate-700 transition-colors hover:border-gray-400"
           aria-labelledby="titulo-av1"
         >
           <legend class="sr-only">Avaliação 1 (AV1)</legend>
 
           <div class="flex items-center gap-2 mb-4">
             <i data-lucide="calculator" class="w-4 h-4 text-indigo-500"></i>
-            <span id="titulo-av1" class="font-semibold text-gray-700"
+            <span
+              id="titulo-av1"
+              class="font-semibold text-gray-800 dark:text-gray-100"
               >Avaliação 1 (AV1)</span
             >
           </div>
@@ -101,7 +93,7 @@
             <div class="space-y-1">
               <label
                 for="av1-trabalho"
-                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide text-center"
               >
                 Trabalho (60%)
               </label>
@@ -113,7 +105,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-800 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do trabalho AV1 (60 por cento)"
                 autocomplete="off"
               />
@@ -122,7 +114,7 @@
             <div class="space-y-1">
               <label
                 for="av1-qstone"
-                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide text-center"
               >
                 QStone (40%)
               </label>
@@ -134,7 +126,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none text-center font-bold text-gray-800 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do QStone AV1 (40 por cento)"
                 autocomplete="off"
               />
@@ -142,10 +134,10 @@
           </div>
 
           <div
-            class="flex justify-between items-center bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-indigo-100 dark:border-slate-700 shadow-sm"
+            class="flex justify-between items-center bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm"
           >
             <span
-              class="text-xs md:text-sm font-bold uppercase tracking-wide text-indigo-600 bg-indigo-50 dark:text-indigo-300 dark:bg-indigo-900/30 px-2 py-1 rounded"
+              class="text-xs md:text-sm font-bold uppercase tracking-wide text-indigo-700 bg-indigo-50 dark:text-indigo-300 dark:bg-indigo-900/30 px-2 py-1 rounded"
             >
               Média Parcial
             </span>
@@ -162,14 +154,16 @@
         </fieldset>
 
         <fieldset
-          class="bg-purple-50/50 dark:bg-slate-800/50 p-5 rounded-xl border border-purple-100 dark:border-slate-700 transition-colors hover:border-purple-200"
+          class="bg-gray-100 dark:bg-slate-800/50 p-5 rounded-xl border border-gray-300 dark:border-slate-700 transition-colors hover:border-gray-400"
           aria-labelledby="titulo-av2"
         >
           <legend class="sr-only">Avaliação 2 (AV2)</legend>
 
           <div class="flex items-center gap-2 mb-4">
             <i data-lucide="calculator" class="w-4 h-4 text-purple-500"></i>
-            <span id="titulo-av2" class="font-semibold text-gray-700"
+            <span
+              id="titulo-av2"
+              class="font-semibold text-gray-800 dark:text-gray-100"
               >Avaliação 2 (AV2)</span
             >
           </div>
@@ -182,7 +176,7 @@
             <div class="space-y-1">
               <label
                 for="av2-trabalho"
-                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide text-center"
               >
                 Trabalho (60%)
               </label>
@@ -194,7 +188,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-800 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do trabalho AV2 (60 por cento)"
                 autocomplete="off"
               />
@@ -203,7 +197,7 @@
             <div class="space-y-1">
               <label
                 for="av2-qstone"
-                class="block text-xs font-semibold text-gray-700 uppercase tracking-wide text-center"
+                class="block text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide text-center"
               >
                 QStone (40%)
               </label>
@@ -215,7 +209,7 @@
                 placeholder="0,0"
                 pattern="^\d{1,2}([.,]\d{1,2})?$"
                 maxlength="5"
-                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-700 dark:text-gray-200 transition-all shadow-sm"
+                class="campo-nota w-full p-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none text-center font-bold text-gray-800 dark:text-gray-200 transition-all shadow-sm"
                 aria-label="Nota do QStone AV2 (40 por cento)"
                 autocomplete="off"
               />
@@ -223,10 +217,10 @@
           </div>
 
           <div
-            class="flex justify-between items-center bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-purple-100 dark:border-slate-700 shadow-sm"
+            class="flex justify-between items-center bg-white dark:bg-slate-900 px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm"
           >
             <span
-              class="text-xs md:text-sm font-bold uppercase tracking-wide text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/30 px-2 py-1 rounded"
+              class="text-xs md:text-sm font-bold uppercase tracking-wide text-purple-700 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/30 px-2 py-1 rounded"
             >
               Média Parcial
             </span>
@@ -243,7 +237,7 @@
         </fieldset>
 
         <section
-          class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-5 md:p-6 rounded-2xl shadow-xl transform transition-transform duration-300 hover:scale-[1.02] border border-gray-200 dark:border-gray-800"
+          class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-5 md:p-6 rounded-2xl shadow-xl transform transition-transform duration-300 hover:scale-[1.02] border border-gray-300 dark:border-gray-800"
           aria-label="Resultado da média final"
         >
           <div
@@ -251,14 +245,14 @@
           >
             <div>
               <p
-                class="text-gray-600 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                class="text-gray-800 dark:text-gray-100 text-xs font-bold uppercase tracking-wider mb-2"
               >
                 Situação Acadêmica
               </p>
               <div class="flex items-center gap-2.5">
                 <span
                   id="icone-situacao"
-                  class="flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full p-1"
+                  class="flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full p-1"
                   aria-hidden="true"
                 >
                   <i
@@ -268,7 +262,7 @@
                 </span>
                 <span
                   id="texto-situacao"
-                  class="text-sm font-semibold text-gray-700 dark:text-gray-200"
+                  class="text-sm font-semibold text-gray-800 dark:text-gray-200"
                   aria-live="polite"
                 >
                   Aguardando dados...
@@ -307,7 +301,7 @@
           <button
             type="button"
             id="botao-limpar"
-            class="text-xs text-gray-400 hover:text-red-500 font-medium transition-colors flex items-center justify-center gap-1.5 mx-auto py-2"
+            class="text-xs text-gray-500 dark:text-gray-400 hover:text-red-500 font-medium transition-colors flex items-center justify-center gap-1.5 mx-auto py-2"
             aria-label="Limpar todos os campos"
           >
             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>

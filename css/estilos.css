@@ -15,7 +15,6 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Modo escuro: fundo e painel */
 body.dark {
   background: linear-gradient(135deg, #1e1b4b 0%, #3b0b2e 100%);
 }
@@ -26,9 +25,9 @@ body.dark {
 
 /* Painel com efeito de vidro */
 .painel-vidro {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(229, 231, 235, 0.96);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(17, 24, 39, 0.14);
 }
 
 /* Ajuste de inputs numéricos visuais */

@@ -1,4 +1,3 @@
-/* Regras e constantes imutáveis */
 const REGRAS = Object.freeze({
   PESOS: { TRABALHO: 0.6, QSTONE: 0.4 },
   LIMITES: { MIN: 0, MAX: 10, CASAS_DECIMAIS: 2 },
@@ -29,7 +28,6 @@ const REGRAS = Object.freeze({
   ANIMACAO: { DURACAO_MS: 600 },
 });
 
-/* Elementos DOM usados (nomes em português e semânticos) */
 const DOM = {
   formulario: document.getElementById("formulario-notas"),
   entradas: document.querySelectorAll(".campo-nota"),
@@ -45,11 +43,9 @@ const DOM = {
   botoes: {
     copiar: document.getElementById("botao-copiar"),
     limpar: document.getElementById("botao-limpar"),
-    tema: document.getElementById("botao-tema"),
   },
 };
 
-/* Cálculos puros */
 function calcularMediaPonderada(notaTrabalho, notaQstone) {
   return notaTrabalho * REGRAS.PESOS.TRABALHO + notaQstone * REGRAS.PESOS.QSTONE;
 }
@@ -65,17 +61,10 @@ function determinarSituacao(notaFinal, possuiDados) {
   return REGRAS.SITUACAO.REPROVADO;
 }
 
-/* Validação e higienização de entrada (aceita vírgula e ponto) */
 function higienizarEntrada(valor) {
   if (!valor) return "";
-
-  // aceita vírgula como separador e converte para ponto
   valor = String(valor).replace(",", ".");
-
-  // remove tudo que não for dígito ou ponto
   let valorLimpo = valor.replace(/[^0-9.]/g, "");
-
-  // evita múltiplos pontos (mantém o primeiro como separador)
   const partes = valorLimpo.split(".");
   if (partes.length > 2) {
     valorLimpo = partes[0] + "." + partes.slice(1).join("");
@@ -106,7 +95,6 @@ function truncar(numero) {
   return Math.trunc(Number(numero) * fator) / fator;
 }
 
-/* Animação suave de números */
 function animarValorNumerico(elemento, valorInicial, valorFinal) {
   valorInicial = Number(valorInicial) || 0;
   valorFinal = Number(valorFinal) || 0;
@@ -130,7 +118,6 @@ function animarValorNumerico(elemento, valorInicial, valorFinal) {
   requestAnimationFrame(passoAnimacao);
 }
 
-/* Atualiza visual da situação (texto + ícone) */
 function atualizarVisualSituacao(configuracao) {
   const { texto, classeCor, icone } = configuracao;
   DOM.situacao.texto.textContent = texto;
@@ -156,7 +143,6 @@ function alternarEstadoBotaoCopiar(ativo) {
   }
 }
 
-/* Lógica de interface: leitura, cálculo e atualização das saídas */
 function atualizarInterface() {
   const obterValor = (id) => parseFloat(document.getElementById(id).value.replace(",", ".").trim()) || 0;
 
@@ -190,7 +176,6 @@ function atualizarInterface() {
   alternarEstadoBotaoCopiar(possuiDados);
 }
 
-/* Copiar relatório para área de transferência (com fallback) */
 async function copiarRelatorio() {
   const obterValorTxt = (id) => document.getElementById(id).value || "0.00";
   const obterTexto = (id) => document.getElementById(id).textContent;
@@ -240,7 +225,6 @@ function exibirFeedbackCopia(sucesso) {
   }, 1600);
 }
 
-/* Inicialização: delegação de eventos e setup */
 function criarDebounce(funcao, atrasoMs = 150) {
   let timer;
   return function debounced(...args) {
@@ -253,8 +237,6 @@ function inicializarAplicacao() {
   if (window.lucide && typeof window.lucide.createIcons === "function") {
     window.lucide.createIcons();
   }
-  const temaInicial = obterTemaInicial();
-  aplicarTema(temaInicial);
   const debouncedAtualizar = criarDebounce(atualizarInterface, 150);
   DOM.formulario.addEventListener("input", (evento) => {
     if (evento.target.classList.contains("campo-nota")) {
@@ -282,12 +264,6 @@ function inicializarAplicacao() {
   });
 
   DOM.botoes.copiar.addEventListener("click", copiarRelatorio);
-  if (DOM.botoes.tema) {
-    DOM.botoes.tema.addEventListener("click", () => {
-      const atual = document.documentElement.classList.contains('dark') ? 'escuro' : 'claro';
-      aplicarTema(atual === 'escuro' ? 'claro' : 'escuro');
-    });
-  }
 
   atualizarInterface();
 }
@@ -295,30 +271,6 @@ function inicializarAplicacao() {
 document.addEventListener("DOMContentLoaded", () => {
   inicializarAplicacao();
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js').catch(() => { });
   }
 });
-
-function obterTemaInicial() {
-  const salvo = localStorage.getItem('tema');
-  if (salvo === 'escuro' || salvo === 'claro') return salvo;
-  const prefereEscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  return prefereEscuro ? 'escuro' : 'claro';
-}
-
-function aplicarTema(tema) {
-  const escuro = tema === 'escuro';
-  document.documentElement.classList.toggle('dark', escuro);
-  document.body.classList.toggle('dark', escuro);
-  localStorage.setItem('tema', tema);
-  atualizarBotaoTema(escuro);
-}
-
-function atualizarBotaoTema(escuro) {
-  const botao = DOM.botoes.tema;
-  if (!botao) return;
-  botao.innerHTML = `<i data-lucide="${escuro ? 'sun' : 'moon'}" class="w-4 h-4"></i><span>${escuro ? 'Claro' : 'Escuro'}</span>`;
-  if (window.lucide && typeof window.lucide.createIcons === "function") {
-    window.lucide.createIcons();
-  }
-}
