@@ -42,12 +42,12 @@
 
   <body class="min-h-screen flex items-center justify-center p-4">
     <main
-      class="painel-vidro w-full max-w-xl md:max-w-2xl p-6 md:p-8 rounded-2xl shadow-2xl relative overflow-hidden"
+      class="painel-vidro w-full max-w-xl md:max-w-2xl p-6 md:p-8 rounded-2xl shadow-2xl relative overflow-visible"
       role="main"
       aria-labelledby="titulo-principal"
     >
       <div
-        class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 to-indigo-500"
+        class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 to-indigo-500 z-0 pointer-events-none"
         aria-hidden="true"
       ></div>
 
@@ -61,7 +61,7 @@
         <span>Escuro</span>
       </button>
 
-      <header class="text-center mb-6">
+      <header class="text-center mb-6 relative z-10">
         <div
           class="inline-flex justify-center items-center bg-indigo-50 p-3 rounded-full mb-4 shadow-sm"
           aria-hidden="true"
