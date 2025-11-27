@@ -30,6 +30,10 @@ body.dark {
   border: 1px solid rgba(17, 24, 39, 0.14);
 }
 
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
 /* Ajuste de inputs numéricos visuais */
 .campo-nota {
   -moz-appearance: textfield;
